@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="donate-form">
+        <label for="name">Name</label>
+        <input type="text" id="name" value="Aaron Skriloff">
+        <label for="email">email</label>
+        <input type="text" id="email" value="yyaskriloff@gmail.com">
+        <label for="card-element">Card Info</label>
+        <div id="card-element"></div>
+        <button type="submit">Submit</button>
+    </form>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="/card.js"></script>
+</body>
+
+</html>
