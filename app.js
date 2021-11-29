@@ -8,20 +8,23 @@ const app = express();
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const port = process.env.PORT || 4502
 
+
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
     console.log("hit")
-    res.sendFile('public/index.html', { root: __dirname })
+    res.sendFile('public/views/index.html', { root: __dirname })
 })
 
 app.get('/contact', (req, res) => {
-    res.sendFile('public/contact.html', { root: __dirname })
+    res.sendFile('public/views/contact.html', { root: __dirname })
 })
 
 app.post('/contact', async (req, res, next) => {
-    const { name, email, message } = body
+    const { name, email, message } = req.body
+    console.log(req.body)
     try {
         let transporter = nodemailer.createTransport({
             // host: "smtp.gmail.com",
@@ -42,26 +45,32 @@ app.post('/contact', async (req, res, next) => {
 
         })
             .then(info => {
-                res.status(200).json({ message: info })
+                res.status(200).json({ message: info, error: false })
             })
     } catch (e) {
-        res.status(500).send({ message: e })
+        res.status(500).send({ message: e, error: true })
     }
 
 })
 
 app.get('/donate', (req, res) => {
-    res.sendFile('public/donate.html', { root: __dirname })
+    res.sendFile('public/views/donate.html', { root: __dirname })
 })
 
 app.post('/donate', async (req, res, next) => {
-    const { amount } = req.body
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount,
-        currency: 'usd',
-        payment_method_types: ['card'],
-    });
-    res.json({ clientSecret: paymentIntent.client_secret })
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: `${req.body.amount}00`,
+            currency: 'usd',
+            payment_method_types: ['card'],
+        });
+        res.json({ clientSecret: paymentIntent.client_secret, error: false })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: true })
+    }
+
+
 })
 
 app.use((req, res, next) => {
