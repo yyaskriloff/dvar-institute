@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         }).then(r => r.json())
         if (!intent.error) {
-            const paymentIntent = await stripe.confirmCardPayment(clientSecret, {
+            const paymentIntent = await stripe.confirmCardPayment(intent.clientSecret, {
                 payment_method: {
                     card: cardElement,
                     receipt_email: email,
