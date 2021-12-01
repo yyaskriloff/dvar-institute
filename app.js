@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
     res.sendFile('public/views/index.html', { root: __dirname })
 })
 
+app.get('/about-us', (req, res) => {
+    res.sendFile('public/views/about-us.html', { root: __dirname })
+})
+
+
+
 app.get('/contact', (req, res) => {
     res.sendFile('public/views/contact.html', { root: __dirname })
 })
@@ -62,11 +68,13 @@ app.get('/donate', (req, res) => {
 })
 
 app.post('/donate', async (req, res, next) => {
+    console.log(req.body)
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: `${req.body.amount}00`,
             currency: 'usd',
             payment_method_types: ['card'],
+            receipt_email: req.body.receipt_email
         });
         res.json({ clientSecret: paymentIntent.client_secret, error: false })
     } catch (err) {

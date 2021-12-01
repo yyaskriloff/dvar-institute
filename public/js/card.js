@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const stripe = Stripe('pk_live_51Jn4FzHz9WyEjJGIJDxEdJLplRnYMq3pZROcP0PzEtXV6pq73bLtGf33LZ1RyiewGq8hHAS1qFmEZqbRY0NKzIrk00KLlJdiyc')
+    // const stripe = Stripe('pk_live_51Jn4FzHz9WyEjJGIJDxEdJLplRnYMq3pZROcP0PzEtXV6pq73bLtGf33LZ1RyiewGq8hHAS1qFmEZqbRY0NKzIrk00KLlJdiyc')
+    const stripe = Stripe('pk_test_51Jn4FzHz9WyEjJGIlLuLGi30mh7aly4pI2abZiAdt955iaISvcrIifGvpLOEk3bUtLSWkQuc87Qtt2cldn5OQjt100vqwSpGeJ')
     const elements = stripe.elements()
     const cardElement = elements.create('card', {
         style: {
@@ -26,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     cardElement.mount('#card-element')
     const nameInput = document.querySelector('#name')
     const emailInput = document.querySelector('#email')
-
     const form = document.querySelector('#donate-form')
     const fail = document.querySelector('#fail')
     const success = document.querySelector('#success')
@@ -43,14 +43,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             body: JSON.stringify({
                 paymentMethodType: 'card',
                 currency: 'usd',
-                amount: Math.floor(document.querySelector('#amount').value)
+                amount: Math.floor(document.querySelector('#amount').value),
+                receipt_email: emailInput.value,
             })
         }).then(r => r.json())
         if (!intent.error) {
             const paymentIntent = await stripe.confirmCardPayment(intent.clientSecret, {
                 payment_method: {
                     card: cardElement,
-                    receipt_email: email,
                     billing_details: {
                         name: nameInput.value,
                         email: emailInput.value
