@@ -1,12 +1,11 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
-
-
 const express = require('express');
 const app = express();
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const port = process.env.PORT || 4502
+const nodemailer = require('nodemailer')
 
 
 app.use(express.static('public'))
@@ -31,23 +30,28 @@ app.post('/contact', async (req, res, next) => {
             // port: 587,
             // secure: false, // true for 465, false for other ports
             service: "gmail",
+            // host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
             auth: {
-                user: '',
+                user: process.env.USERNAME,
                 pass: process.env.PASS,
             },
         });
         let info = await transporter.sendMail({
-            from: '"Tatzmichu.org" <tatzmichu@gmail.com> ',
-            to: 'office@tatzmichu.org',
+            from: '"dvarinstitute.org"',
+            to: 'yofried@gmail.com',
             replyTo: email,
             subject: "New Contact Form",
-            text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\n\n sent from tatzmichu.org contect form \n Developed by Aaron Skriloff`,
+            text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\n\n sent from dvarinstitute.org contect form \n Developed by Aaron Skriloff`,
 
         })
             .then(info => {
                 res.status(200).json({ message: info, error: false })
             })
     } catch (e) {
+        console.log(e)
         res.status(500).send({ message: e, error: true })
     }
 
