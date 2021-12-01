@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // const stripe = Stripe('pk_live_51Jn4FzHz9WyEjJGIJDxEdJLplRnYMq3pZROcP0PzEtXV6pq73bLtGf33LZ1RyiewGq8hHAS1qFmEZqbRY0NKzIrk00KLlJdiyc')
-    const stripe = Stripe('pk_test_51Jn4FzHz9WyEjJGIlLuLGi30mh7aly4pI2abZiAdt955iaISvcrIifGvpLOEk3bUtLSWkQuc87Qtt2cldn5OQjt100vqwSpGeJ')
+    const stripe = Stripe('pk_live_51Jn4FzHz9WyEjJGIJDxEdJLplRnYMq3pZROcP0PzEtXV6pq73bLtGf33LZ1RyiewGq8hHAS1qFmEZqbRY0NKzIrk00KLlJdiyc')
+    // const stripe = Stripe('pk_test_51Jn4FzHz9WyEjJGIlLuLGi30mh7aly4pI2abZiAdt955iaISvcrIifGvpLOEk3bUtLSWkQuc87Qtt2cldn5OQjt100vqwSpGeJ')
     const elements = stripe.elements()
     const cardElement = elements.create('card', {
         style: {
