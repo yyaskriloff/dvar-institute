@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    console.log("hit")
     res.sendFile('public/views/index.html', { root: __dirname })
 })
 
@@ -29,7 +28,6 @@ app.get('/contact', (req, res) => {
 
 app.post('/contact', async (req, res, next) => {
     const { name, email, message } = req.body
-    console.log(req.body)
     try {
         let transporter = nodemailer.createTransport({
             // host: "smtp.gmail.com",
@@ -74,7 +72,8 @@ app.post('/donate', async (req, res, next) => {
             amount: `${req.body.amount}00`,
             currency: 'usd',
             payment_method_types: ['card'],
-            receipt_email: req.body.receipt_email
+            receipt_email: req.body.receipt_email,
+            description: "Yeshiva D'Var Yeshorim The D'var Institute: Tax I.D. No. 112511058,\nThank you for your generous donation. We appreciate your kindness and thank you for your consideration. Thank you."
         });
         res.json({ clientSecret: paymentIntent.client_secret, error: false })
     } catch (err) {
