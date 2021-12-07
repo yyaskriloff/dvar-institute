@@ -20,6 +20,22 @@ app.get('/about-us', (req, res) => {
     res.sendFile('public/views/about-us.html', { root: __dirname })
 })
 
+app.get('/boats', (req, res) => {
+    res.sendFile('public/views/boats.html', { root: __dirname })
+})
+
+app.get('/auto', (req, res) => {
+    res.sendFile('public/views/auto.html', { root: __dirname })
+})
+
+app.get('/other', (req, res) => {
+    res.sendFile('public/views/other.html', { root: __dirname })
+})
+
+app.get('/irs-guide', (req, res) => {
+    res.sendFile('public/views/irs-guide.html', { root: __dirname })
+})
+
 
 
 app.get('/contact', (req, res) => {
@@ -27,7 +43,11 @@ app.get('/contact', (req, res) => {
 })
 
 app.post('/contact', async (req, res, next) => {
-    const { name, email, message } = req.body
+    const { form, body } = req.body
+    let message = `Form: ${form}`
+    for (let input in body) {
+        message += `\n${input}: ${body[input]}`
+    }
     try {
         let transporter = nodemailer.createTransport({
             // host: "smtp.gmail.com",
@@ -46,9 +66,9 @@ app.post('/contact', async (req, res, next) => {
         let info = await transporter.sendMail({
             from: '"dvarinstitute.org"',
             to: 'yofried@gmail.com',
-            replyTo: email,
+            replyTo: body.email,
             subject: "New Contact Form",
-            text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\n\n sent from dvarinstitute.org contect form \n Developed by Aaron Skriloff`,
+            text: `${message}\n\n sent from dvarinstitute.org contect form \n Developed by Aaron Skriloff`,
 
         })
             .then(info => {
