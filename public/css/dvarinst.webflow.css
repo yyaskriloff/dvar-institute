@@ -284,6 +284,7 @@ figcaption {
   color: #fff;
   font-size: 12px;
   line-height: 20px;
+  text-align: center;
   letter-spacing: 2px;
   text-decoration: none;
   text-transform: uppercase;
@@ -512,6 +513,8 @@ figcaption {
   padding-top: 9px;
   padding-bottom: 9px;
   opacity: 0.6;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
   font-size: 12px;
   line-height: 20px;
   font-weight: 500;
@@ -1388,6 +1391,23 @@ figcaption {
   justify-content: space-around;
 }
 
+.div-block-2.home-btn {
+  padding-bottom: 61px;
+}
+
+.heading {
+  margin-bottom: 31px;
+  text-align: center;
+}
+
+.dropdown-list {
+  text-align: center;
+}
+
+.dropdown-list.w--open {
+  text-align: center;
+}
+
 @media screen and (max-width: 991px) {
   .section.cc-cta {
     padding-right: 0px;
@@ -1403,10 +1423,16 @@ figcaption {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
+    text-align: center;
   }
 
   .button.cc-contact-us {
     display: none;
+  }
+
+  .button.dnt {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .heading-jumbo {
@@ -1614,6 +1640,22 @@ figcaption {
     width: 80%;
     padding-right: 15px;
     text-align: center;
+  }
+
+  .div-block-2 {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .div-block-2.home-btn {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
   }
 }
 
